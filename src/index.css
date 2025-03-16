@@ -1,0 +1,55 @@
+@import 'tailwindcss';
+
+.iconHover:hover {
+    box-sizing: border-box;
+    background-color: #e4e4e7;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.iconHover>* {
+    position: relative;
+    z-index: 20;
+}
+
+
+.content {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-areas:
+        "navbar navbar"
+        "sidebar main"
+    ;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+}
+
+.navbar-page {
+    grid-area: navbar;
+}
+
+.main-content {
+    grid-area: main;
+}
+
+.aside-page {
+    grid-area: sidebar;
+}
+
+.aside-page:hover,
+.asideIsHover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    width: 280px;
+}
+
+
+.aside-page:hover section div:first-child {
+    background-color: #feefc3;
+    cursor: pointer;
+}
+
+.aside-page section div:hover {
+    background-color: #e4e4e7;
+    cursor: pointer;
+}
