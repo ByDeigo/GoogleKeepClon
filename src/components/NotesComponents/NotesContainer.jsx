@@ -1,12 +1,19 @@
 import Note from "./Note"
 
 export default function NotesContainer() {
+    const textContent = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis eaque cumque qui, quaerat sint adipisci neque dicta molestiae velit! Voluptates labore impedit illum, id vitae unde voluptatibus adipisci excepturi, iure tempore'
+    const largeContent = '    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum quos sequi autem velit eveniet fugit culpa odit et ut cumque. Deserunt ab in vitae accusantium obcaecati debitis esse culpa, iusto, doloremque neque voluptatibus. Eum, quis! Voluptatibus quasi nesciunt delectus vero sapiente. Soluta aperiam perspiciatis consectetur? Repellendus maxime nam tempora sed odit, magnam et vel beatae nobis est, a omnis ab debitis dicta delectus! Ipsa aliquid consequatur suscipit placeat harum aspernatur illo dignissimos aperiam quas! Voluptas fuga quasi mollitia inventore facere suscipit incidunt omnis aspernatur reprehenderit iusto officiis, laborum consequuntur nam saepe nesciunt assumenda neque maiores ad placeat ea eum! A assumenda nemo laborum veritatis odit non tenetur animi omnis distinctio ab quaerat itaque officiis rerum id repudiandae fugit, quo numquam perspiciatis sit! Vel vitae voluptate magnam eligendi tenetur! Reprehenderit est nihil obcaecati sapiente tempora blanditiis, dicta iusto beatae et corrupti explicabo nemo ab, suscipit nulla placeat voluptates ducimus molestias natus ea! Officia, atque magni debitis, quis quae quasi alias aliquam ab veritatis delectus, possimus nam voluptatem nisi nihil itaque earum sit ducimus eligendi aliquid iste at blanditiis animi fuga. Eveniet quidem ipsam enim doloribus, corporis recusandae delectus, rem dolor expedita architecto voluptatum ad eaque voluptatibus pariatur perferendis dolorem illum? Officiis minima expedita molestias perferendis laboriosam. Impedit doloribus error tempora, odit magni accusantium sed obcaecati aperiam neque rem minus, est, nisi quisquam ad delectus pariatur laborum ipsam sequi qui nam aliquid. Illo minus nihil aliquam, omnis explicabo error sequi exercitationem repellendus amet nostrum repudiandae eligendi aperiam, cumque officia in laborum a quos delectus quaerat distinctio dolorum similique quis reprehenderit culpa. Voluptate doloribus labore incidunt autem, porro consectetur consequuntur? Est, explicabo reiciendis tempore consequuntur dolore praesentium possimus quibusdam eaque nesciunt, aperiam deserunt commodi adipisci culpa harum, voluptatem eius? Dolor a omnis ea voluptatum distinctio, perferendis quidem molestias! Veritatis facere deleniti velit magnam similique ex eveniet, saepe, quo rerum illo eligendi, quam eaque explicabo ad placeat quasi. Amet nostrum necessitatibus officia ducimus excepturi adipisci unde explicabo asperiores id porro est voluptate saepe delectus perferendis, molestiae autem beatae! Molestias qui necessitatibus repudiandae. Repudiandae nisi error excepturi exercitationem porro quos fuga, optio, beatae, reiciendis temporibus ratione! Tenetur ut pariatur fugit aliquid, dolor repellendus odio nobis dignissimos aliquam magnam nulla voluptates sint. Laudantium aspernatur, incidunt illo vitae officia consequatur. Laborum incidunt at rerum labore nesciunt ducimus pariatur eius enim dicta voluptates dolor, itaque praesentium. Nisi reiciendis rerum, odit corporis vitae corrupti nostrum nemo necessitatibus illo libero animi a iure cumque culpa quaerat nulla ullam. Molestias placeat iste tenetur sapiente iure quasi minima, quo esse nobis harum officiis porro assumenda rerum ex totam minus corrupti, blanditiis neque quis obcaecati! Eaque numquam natus unde animi, suscipit iusto dolore. Totam, sapiente possimus perspiciatis modi id ipsa tempora ex error explicabo vero incidunt quae, doloribus cupiditate odio officiis fuga earum facilis distinctio culpa autem quibusdam. Consequuntur necessitatibus at aliquid quo fugiat, voluptates iste nostrum ipsam itaque fuga id minima accusamus, laudantium soluta nisi similique dolor eveniet? Non officia nihil quae quaerat doloremque, unde itaque voluptate vitae error harum vero porro.'
     return (
-        <div className=" flex gap-4 p-2 h-auto items-center justify-center">
-            <Note />
-            <Note />
-            <Note />
-            <Note />
+        <div className="masonryGrid">
+            <Note content={textContent} />
+            <Note content={textContent} />
+            <Note content={largeContent} />
+            <Note content={textContent} />
+            <Note content={largeContent} />
+            <Note content={textContent} />
+            <Note content={textContent} />
+            <Note content={largeContent} />
+            <Note content={textContent} />
         </div>
     )
 }

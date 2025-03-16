@@ -6,7 +6,7 @@ import NotesContainer from "./components/NotesComponents/NotesContainer"
 
 function App() {
   return (
-    <div className="content">
+    <div className="content relative">
       <MenuProvider>
         <Navbar />
         <main className="main-content flex flex-col gap-5 p-4">

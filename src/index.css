@@ -12,16 +12,28 @@
     z-index: 20;
 }
 
+.masonryGrid {
+    width: 100%;
+    columns: 280px;
+    column-gap: 1em;
+}
+
+.masonryGrid article {
+    max-width: 100%;
+    margin-bottom: 10px;
+    break-inside: avoid;
+}
+
 
 .content {
     width: 100%;
     height: 100vh;
     display: grid;
     grid-template-areas:
-        "navbar navbar"
-        "sidebar main"
+        "navbar navbar navbar"
+        "sidebar main main"
     ;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 100px 1fr;
     grid-template-rows: auto 1fr;
 }
 

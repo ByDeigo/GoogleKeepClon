@@ -14,10 +14,10 @@ export default function Sidebar() {
     const iconColor = '#5a5a5a'
     const iconStrokeWidht = '2.5px'
     return (
-        <aside className={`aside-page bg-white flex flex-col box-border w-[90px] transition-all delay-200 duration-300 group ${isAsideOpen && expandAsideClass}`} >
-            <section className="h-4/6 flex flex-col">
+        <aside className={`aside-page  bg-white flex flex-col box-border w-[90px] transition-all delay-200 duration-300 group ${isAsideOpen && expandAsideClass}`} >
+            <section className="h-4/6 flex flex-col sticky top-20 pt-8">
                 {iconList.map((Icon, index) => (
-                    <div key={index} className="flex w-full  py-3.5 rounded-r-full transition-all hover:cursor-pointer ">
+                    <div key={index} className="flex w-full py-3.5 rounded-r-full transition-all hover:cursor-pointer">
                         <span className="pl-4 flex gap-4 ">
                             <Icon size={iconSize} color={iconColor} strokeWidht={iconStrokeWidht} />
                             <a href="#" className={`font-semibold group-hover:opacity-100 opacity-0 transition-opacity delay-200 duration-300 ${isAsideOpen && 'opacity-100'}`}>{iconsDescription[index]}</a>

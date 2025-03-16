@@ -11,7 +11,7 @@ export default function CreateNotes() {
         Palette, BellPlus, UserPlus, Image, Archive, EllipsisVertical, Undo2, Redo2
     ], [])
     return (
-        <form className="mx-auto bg-white mt-5 min-h-[40px] w-[600px] rounded-lg shadow-lg flex flex-col p-4 gap-4 ">
+        <form className="mx-auto bg-white mt-5 min-h-[40px]  w-full max-w-[600px] rounded-lg shadow-lg flex flex-col p-4 gap-4 ">
             <div className={isOpen ? "w-full flex justify-between" : 'hidden'}>
                 <input placeholder="Título" className="placeholder:font-semibold w-full focus-visible:outline-none" />
                 <IconHover title={'Fijar nota'}>
