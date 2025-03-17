@@ -12,14 +12,14 @@ export default function Sidebar() {
     const iconsDescription = ['Notas', 'Recordatorios', 'Etiquetas', 'Archivar', 'Papelera']
     const iconSize = '22px'
     const iconColor = '#5a5a5a'
-    const iconStrokeWidht = '2.5px'
+    const iconStrokeWidth = '2.5px'
     return (
-        <aside className={`aside-page h-full col-start-1 col-end-1 bg-white flex flex-col box-border w-[90px] transition-all delay-200 duration-300 group ${isAsideOpen && expandAsideClass}`} >
+        <aside className={`aside-page h-full col-start-1 z-30 col-end-1 bg-white flex flex-col box-border w-[90px] transition-all delay-200 duration-300 group ${isAsideOpen && expandAsideClass}`} >
             <section className="h-4/6 flex flex-col">
                 {iconList.map((Icon, index) => (
                     <div key={index} className="flex w-full py-3.5 rounded-r-full transition-all hover:cursor-pointer">
                         <span className="pl-4 flex gap-4 ">
-                            <Icon size={iconSize} color={iconColor} strokeWidht={iconStrokeWidht} />
+                            <Icon size={iconSize} color={iconColor} strokeWidth={iconStrokeWidth} />
                             <a href="#" className={`font-semibold group-hover:opacity-100 opacity-0 transition-opacity delay-200 duration-300 ${isAsideOpen && 'opacity-100'}`}>{iconsDescription[index]}</a>
                         </span>
                     </div>

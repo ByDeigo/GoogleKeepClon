@@ -25,6 +25,19 @@
 }
 
 
+.alternativeDisplay {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.alternativeDisplay article {
+    margin: auto;
+    width: 100%;
+    max-width: 600px;
+    max-height: 300px;
+}
+
 .content {
     display: flex;
     flex-direction: column;
@@ -44,7 +57,8 @@
 
 .aside-page:hover,
 .asideIsHover {
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04);
     width: 280px;
 }
 
@@ -57,4 +71,13 @@
 .aside-page section div:hover {
     background-color: #e4e4e7;
     cursor: pointer;
+}
+
+
+/* Box shadows */
+
+.contourShadow {
+    box-shadow: 0px 1px 5px 3px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0px 1px 5px 3px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 1px 5px 3px rgba(0, 0, 0, 0.75);
 }
