@@ -1,14 +1,16 @@
 import { Pin, Palette, BellPlus, UserPlus, Image, Archive, EllipsisVertical, Undo2, Redo2, User, icons, Icon } from "lucide-react"
 import { IconHover } from "../IconsEffects"
 import { useState, useMemo, useRef, useReducer } from "react"
+import { useContext, useEffect } from "react"
+import { NotesContext } from "../../contexts/NotesContext"
+
 
 const initialState = {
     title: '',
     description: '',
     id: 0,
+    pinned: false,
 }
-
-
 
 export default function CreateNotes() {
     //Estados y referencias
@@ -16,6 +18,7 @@ export default function CreateNotes() {
     const createNotesRef = useRef(null);
     const inputDescriptionRef = useRef(null);
     const inputTitleRef = useRef(null);
+    const documentItemsRef = useRef(null);
     //Reducer
     function reducer(state, action) {
         switch (action.type) {
@@ -27,6 +30,12 @@ export default function CreateNotes() {
             }
             case 'ADD_ID': {
                 return { ...state, id: action.value }
+            }
+            case 'PIN': {
+                return { ...state, pinned: action.value }
+            }
+            case 'RESET': {
+                return initialState
             }
             default: {
                 return state
@@ -42,56 +51,93 @@ export default function CreateNotes() {
     const iconSize = '16px'
     const iconColor = '#5a5a5a'
     const iconStrokeWidth = '2.5px'
+    //Contextos
+    const { notes, toggleNotes } = useContext(NotesContext);
     //Handle functions
+    function resetValues() {
+        dispacth({ type: 'RESET' })
+    }
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(createNotesRef.current.classList.contains('createNotesItem'))
+        if (state.title || state.description !== '') {
+            setOpen(true);
+            console.log(state);
+            toggleNotes(state);
+            resetValues();
+        }
     }
 
+    useEffect(() => {
+        function handleClickOutside(e) {
+            if (!(e.target.classList.contains('createNotesItem'))) {
+                handleSubmit(e);
+            }
+        }
+        document.addEventListener('click', handleClickOutside)
+        return () => {
+            document.removeEventListener('click', handleClickOutside)
+        }
+    })
+
+
     return (
-        <form className="mx-auto mt-5 w-[600px] rounded-lg shadow-lg flex flex-col p-4 gap-4 createNotesItem" onSubmit={handleSubmit} ref={createNotesRef}>
-            <div className={isOpen ? `w-full flex justify-between` : 'hidden'}>
+        <form className="mx-auto w-2/3 max-w-[600px] rounded-lg shadow-lg flex flex-col p-4 gap-4 createNotesItem" ref={createNotesRef}>
+            <div className={`createNotesItem ${isOpen ? "w-full flex justify-between" : "hidden"}`}>
                 <input
                     placeholder="Título"
-                    className="placeholder:font-semibold w-full focus-visible:outline-none"
+                    className="placeholder:font-semibold w-full focus-visible:outline-none createNotesItem"
                     ref={inputTitleRef}
                     value={state.title}
                     onChange={(e) => {
-                        dispacth({ type: 'ADD_TITLE', value: e.target.value })
-                    }} />
+                        dispacth({ type: "ADD_TITLE", value: e.target.value });
+                    }}
+                />
 
-
-                <IconHover title={'Fijar nota'}>
-                    <Pin color="gray" />
+                <IconHover title={"Fijar nota"} className="createNotesItem">
+                    <Pin
+                        color={state.pinned ? "black" : "gray"}
+                        onClick={() => {
+                            dispacth({ type: "PIN", value: !state.pinned });
+                            console.log(state);
+                        }}
+                        className="createNotesItem"
+                    />
                 </IconHover>
             </div>
-            {/*Crear una nota*/}
+
+            {/* Crear una nota */}
             <input
                 placeholder="Crear una nota..."
-                className="w-full focus-visible:outline-none"
+                className="w-full focus-visible:outline-none createNotesItem"
                 onFocus={() => setOpen(true)}
                 ref={inputDescriptionRef}
                 value={state.description}
                 onChange={(e) => {
-                    dispacth({ type: 'ADD_DESCRIPTION', value: e.target.value })
-                }} />
+                    dispacth({ type: "ADD_DESCRIPTION", value: e.target.value });
+                }}
+            />
 
-
-
-            <div className={isOpen ? `flex w-full justify-between` : 'hidden'}>
-                <aside className="flex items-center justify-between w-2/3">
+            <div className={`createNotesItem ${isOpen ? "flex w-full justify-between" : "hidden"}`}>
+                <aside className="flex items-center justify-between w-2/3 createNotesItem">
                     {iconList.map((Icon, index) => (
-                        <IconHover key={index}>
-                            <Icon size={iconSize} color={iconColor} strokeWidth={iconStrokeWidth} />
+                        <IconHover key={index} className="createNotesItem">
+                            <Icon size={iconSize} color={iconColor} strokeWidth={iconStrokeWidth} className="createNotesItem" />
                         </IconHover>
                     ))}
                 </aside>
-                <div className={isOpen ? `w-1/3 flex justify-end items-center` : 'hidden'} >
-                    <button onClick={() => setOpen(false)} className="hover:bg-zinc-200 hover:cursor-pointer hover:outline-4 outline-zinc-200 rounded-sm w-1/2 flex justify-center">
-                        <p className=" font-semibold text-sm">Cerrar</p>
+                <div className={`createNotesItem ${isOpen ? "w-1/3 flex justify-end items-center" : "hidden"}`}>
+                    <button
+                        onClick={(e) => {
+                            handleSubmit(e)
+                            setOpen(false);
+                            inputDescriptionRef.current.blur()
+                        }}
+                        className="hover:bg-zinc-200 hover:cursor-pointer hover:outline-4 outline-zinc-200 rounded-sm w-1/2 flex justify-center createNotesItem">
+                        <p className="text-zinc-600">Cerrar</p>
                     </button>
                 </div>
             </div>
         </form>
+
     )
 }

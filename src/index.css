@@ -22,6 +22,7 @@
     max-width: 100%;
     margin-bottom: 10px;
     break-inside: avoid;
+    width: 100%;
 }
 
 
@@ -38,14 +39,14 @@
     max-height: 300px;
 }
 
-.content {
+.pageContent {
     display: flex;
     flex-direction: column;
     position: relative;
 }
 
 
-.main-content {
+.mainContentLayout {
     display: grid;
     grid-template-columns: 90px 1fr;
     grid-template-rows: auto;

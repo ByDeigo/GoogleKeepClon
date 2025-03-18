@@ -1,12 +1,12 @@
-import { AlignJustify, Search, RotateCw, Rows2, Settings } from 'lucide-react'
+import { AlignJustify, Search, RotateCw, Rows2, Settings, Grid2X2 } from 'lucide-react'
 import { useContext, useState, useEffect } from 'react'
-import { IconHover } from './IconsEffects'
+import { IconHover } from '../components/IconsEffects'
 import { MenuContext } from '../contexts/MenuContext'
 import { DisplayContext } from '../contexts/DisplayContext'
-import AppButton from './Buttons/AppButton'
+import AppButton from '../components/Buttons/AppButton.jsx'
 
 export default function Navbar() {
-    const { isAsideOpen, toggleOpen } = useContext(MenuContext);
+    const { toggleOpen } = useContext(MenuContext);
     const { isDisplayChanged, toggleDisplay } = useContext(DisplayContext)
     const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
@@ -42,7 +42,13 @@ export default function Navbar() {
                     <RotateCw size={iconSize} color={iconColor} strokeWidth={iconStrokeWidth} />
                 </AppButton>
                 <AppButton iconEvent={toggleDisplay}>
-                    <Rows2 size={iconSize} color={iconColor} strokeWidth={iconStrokeWidth} />
+                    {
+                        isDisplayChanged ? (
+                            <Grid2X2 size={iconSize} color={iconColor} strokeWidth={iconStrokeWidth} />
+                        ) : (
+                            <Rows2 size={iconSize} color={iconColor} strokeWidth={iconStrokeWidth} />
+                        )
+                    }
                 </AppButton>
                 <AppButton>
                     <Settings size={iconSize} color={iconColor} strokeWidth={iconStrokeWidth} />
