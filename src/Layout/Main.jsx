@@ -3,6 +3,7 @@ import CreateNotes from "../components/NotesComponents/CreateNotes";
 import { NotesContext } from "../contexts/NotesContext";
 import { useContext } from "react";
 
+
 export default function Main() {
     const { notes } = useContext(NotesContext)
     return (

@@ -16,10 +16,10 @@
     width: 100%;
     columns: 280px;
     column-gap: 1em;
+    row-gap: 10px;
 }
 
 .masonryGrid article {
-    max-width: 100%;
     margin-bottom: 10px;
     break-inside: avoid;
     width: 100%;

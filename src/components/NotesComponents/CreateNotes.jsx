@@ -12,13 +12,14 @@ const initialState = {
     pinned: false,
 }
 
+
+
 export default function CreateNotes() {
     //Estados y referencias
     const [isOpen, setOpen] = useState(false);
     const createNotesRef = useRef(null);
     const inputDescriptionRef = useRef(null);
     const inputTitleRef = useRef(null);
-    const documentItemsRef = useRef(null);
     //Reducer
     function reducer(state, action) {
         switch (action.type) {
@@ -42,8 +43,10 @@ export default function CreateNotes() {
             }
         }
     }
+
+
     //Usereducer
-    const [state, dispacth] = useReducer(reducer, initialState);
+    const [state, dispatch] = useReducer(reducer, initialState);
     //Iconos
     const iconList = useMemo(() => [
         Palette, BellPlus, UserPlus, Image, Archive, EllipsisVertical, Undo2, Redo2
@@ -55,14 +58,17 @@ export default function CreateNotes() {
     const { notes, toggleNotes } = useContext(NotesContext);
     //Handle functions
     function resetValues() {
-        dispacth({ type: 'RESET' })
+        dispatch({ type: 'RESET' })
     }
+    function formatNoteId(number) {
+        return number.toString().slice(-6);
+    }
+
     function handleSubmit(e) {
         e.preventDefault();
         if (state.title || state.description !== '') {
-            setOpen(true);
-            console.log(state);
             toggleNotes(state);
+            setOpen(true);
             resetValues();
         }
     }
@@ -89,7 +95,10 @@ export default function CreateNotes() {
                     ref={inputTitleRef}
                     value={state.title}
                     onChange={(e) => {
-                        dispacth({ type: "ADD_TITLE", value: e.target.value });
+                        dispatch({ type: "ADD_TITLE", value: e.target.value });
+                    }}
+                    onFocus={() => {
+                        dispatch({ type: 'ADD_ID', value: formatNoteId(Date.now()) });
                     }}
                 />
 
@@ -97,8 +106,7 @@ export default function CreateNotes() {
                     <Pin
                         color={state.pinned ? "black" : "gray"}
                         onClick={() => {
-                            dispacth({ type: "PIN", value: !state.pinned });
-                            console.log(state);
+                            dispatch({ type: "PIN", value: !state.pinned });
                         }}
                         className="createNotesItem"
                     />
@@ -109,11 +117,14 @@ export default function CreateNotes() {
             <input
                 placeholder="Crear una nota..."
                 className="w-full focus-visible:outline-none createNotesItem"
-                onFocus={() => setOpen(true)}
+                onFocus={() => {
+                    setOpen(true)
+                    dispatch({ type: 'ADD_ID', value: formatNoteId(Date.now()) });
+                }}
                 ref={inputDescriptionRef}
                 value={state.description}
                 onChange={(e) => {
-                    dispacth({ type: "ADD_DESCRIPTION", value: e.target.value });
+                    dispatch({ type: "ADD_DESCRIPTION", value: e.target.value });
                 }}
             />
 
