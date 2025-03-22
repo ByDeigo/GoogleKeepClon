@@ -16,11 +16,6 @@ export default function Note({ title, content, isPinned, id }) {
 
     function handleUpdate() {
         setPinned(prev => !prev)
-        toggleNotes([], {
-            id: id,
-            prop: 'pinned',
-            value: pinned,
-        })
     }
 
     return (
