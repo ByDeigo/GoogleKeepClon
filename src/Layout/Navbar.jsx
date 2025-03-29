@@ -24,7 +24,7 @@ export default function Navbar() {
     return (
 
         <nav className='flex items-center shadow-sm justify-between md:justify-around w-full gap-5 py-2 border-b-1 sticky top-0 border-gray-200  bg-white z-40 navbar-page'>
-            <div className='flex items-center justify-left pl-6 gap-5 w-1/2 md:1/5'>
+            <div className='flex items-center justify-left pl-5 gap-8 w-1/2 md:1/5'>
                 <IconHover>
                     <AlignJustify onClick={toggleOpen} size={iconSize} color={iconColor} strokeWidth={iconStrokeWidth} />
                 </IconHover>

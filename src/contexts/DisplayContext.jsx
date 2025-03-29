@@ -5,7 +5,6 @@ export const DisplayContext = createContext();
 export function DisplayProvider({ children }) {
     const [isDisplayChanged, setDisplayChanged] = useState(false);
     function toggleDisplay() {
-        console.log('Activado')
         setDisplayChanged(prev => !prev);
     }
     return (

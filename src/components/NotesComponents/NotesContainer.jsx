@@ -24,7 +24,7 @@ export default function NotesContainer({ notesArray }) {
                     <Note title={note.title} isPinned={note.pinned} content={note.description} id={note.id} key={note.id} />
                 ))}
             </section>
-            {pinnedNotes.length > 0 && pinnedNotes > 0 && <h3 className="py-6 px-5 text-sm font-semibold text-zinc-500">Otras</h3>}
+            {pinnedNotes.length > 0 && <h3 className="py-6 px-5 text-sm font-semibold text-zinc-500">Otras</h3>}
             <section className={isDisplayChanged ? 'alternativeDisplay ' : 'masonryGrid'} >
                 {normalNotes.map((note) => (
                     <Note title={note.title} isPinned={note.pinned} content={note.description} id={note.id} key={note.id} />

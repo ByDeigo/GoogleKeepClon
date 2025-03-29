@@ -3,6 +3,7 @@ import { IconHover } from "../IconsEffects"
 import { useState, useMemo, useRef, useReducer } from "react"
 import { useContext, useEffect } from "react"
 import { NotesContext } from "../../contexts/NotesContext"
+import { createNotesReducerKeys } from "../../const"
 
 
 const initialState = {
@@ -19,23 +20,22 @@ export default function CreateNotes() {
     const [isOpen, setOpen] = useState(false);
     const createNotesRef = useRef(null);
     const inputDescriptionRef = useRef(null);
-    const inputTitleRef = useRef(null);
     //Reducer
     function reducer(state, action) {
         switch (action.type) {
-            case 'ADD_TITLE': {
-                return { ...state, title: inputTitleRef.current.value }
+            case createNotesReducerKeys.ADD_TITLE: {
+                return { ...state, title: action.value }
             }
-            case 'ADD_DESCRIPTION': {
-                return { ...state, description: inputDescriptionRef.current.value }
+            case createNotesReducerKeys.ADD_DESCRIPTION: {
+                return { ...state, description: action.value }
             }
-            case 'ADD_ID': {
+            case createNotesReducerKeys.ADD_ID: {
                 return { ...state, id: action.value }
             }
-            case 'PIN': {
+            case createNotesReducerKeys.PIN: {
                 return { ...state, pinned: action.value }
             }
-            case 'RESET': {
+            case createNotesReducerKeys.RESET: {
                 return initialState
             }
             default: {
@@ -58,7 +58,7 @@ export default function CreateNotes() {
     const { notes, toggleNotes } = useContext(NotesContext);
     //Handle functions
     function resetValues() {
-        dispatch({ type: 'RESET' })
+        dispatch({ type: createNotesReducerKeys.RESET })
     }
     function formatNoteId(number) {
         return number.toString().slice(-6);
@@ -73,82 +73,106 @@ export default function CreateNotes() {
         }
     }
 
+
+    function handleInputTextarea(e) {
+        e.target.style.height = '38px'
+        e.target.style.height = e.target.scrollHeight + 'px';
+    }
+
+
+    function handleChangeDescription(e) {
+        dispatch({ type: createNotesReducerKeys.ADD_DESCRIPTION, value: e.target.value })
+    }
+
     useEffect(() => {
         function handleClickOutside(e) {
-            if (!(e.target.classList.contains('createNotesItem'))) {
+            if (createNotesRef.current && !(createNotesRef.current.contains(e.target))) {
                 handleSubmit(e);
             }
         }
-        document.addEventListener('click', handleClickOutside)
-        return () => {
-            document.removeEventListener('click', handleClickOutside)
+        if (createNotesRef) {
+            document.addEventListener('click', handleClickOutside)
+            return () => {
+                document.removeEventListener('click', handleClickOutside)
+            }
         }
     })
 
 
     return (
-        <form className="mx-auto w-2/3 max-w-[600px] rounded-lg shadow-lg flex flex-col p-4 gap-4 createNotesItem" ref={createNotesRef}>
-            <div className={`createNotesItem ${isOpen ? "w-full flex justify-between" : "hidden"}`}>
+        <form className="mx-auto w-2/3 h-auto max-w-[600px] rounded-lg shadow-lg flex flex-col p-4 gap-4" ref={createNotesRef}>
+            <div className={` ${isOpen ? "w-full flex justify-between" : "hidden"}`}>
                 <input
                     placeholder="Título"
-                    className="placeholder:font-semibold w-full focus-visible:outline-none createNotesItem"
-                    ref={inputTitleRef}
+                    className="placeholder:font-semibold w-full focus-visible:outline-none"
                     value={state.title}
                     onChange={(e) => {
-                        dispatch({ type: "ADD_TITLE", value: e.target.value });
+                        dispatch({ type: createNotesReducerKeys.ADD_TITLE, value: e.target.value });
                     }}
                     onFocus={() => {
-                        dispatch({ type: 'ADD_ID', value: formatNoteId(Date.now()) });
+                        dispatch({ type: createNotesReducerKeys.ADD_ID, value: formatNoteId(Date.now()) });
                     }}
                 />
 
-                <IconHover title={"Fijar nota"} className="createNotesItem">
+                <IconHover title={"Fijar nota"} >
                     <Pin
                         color={state.pinned ? "black" : "gray"}
                         onClick={() => {
-                            dispatch({ type: "PIN", value: !state.pinned });
+                            dispatch({ type: createNotesReducerKeys.PIN, value: !state.pinned });
                         }}
-                        className="createNotesItem"
                     />
                 </IconHover>
             </div>
 
             {/* Crear una nota */}
-            <input
-                placeholder="Crear una nota..."
-                className="w-full focus-visible:outline-none createNotesItem"
-                onFocus={() => {
-                    setOpen(true)
-                    dispatch({ type: 'ADD_ID', value: formatNoteId(Date.now()) });
-                }}
-                ref={inputDescriptionRef}
-                value={state.description}
-                onChange={(e) => {
-                    dispatch({ type: "ADD_DESCRIPTION", value: e.target.value });
-                }}
-            />
+            {!isOpen ? (
+                <input
+                    placeholder="Crear una nota..."
+                    className="w-full focus-visible:outline-none placeholder:text-[#4c4c4c]"
+                    onFocus={() => {
+                        setOpen(true)
+                        dispatch({ type: createNotesReducerKeys.ADD_ID, value: formatNoteId(Date.now()) });
+                    }}
+                    value={state.description}
+                    onChange={handleChangeDescription} />
+            ) : (
+                <textarea
+                    placeholder="Crear una nota..."
+                    className="w-full focus-visible:outline-none h-auto placeholder:text-[#4c4c4c]"
+                    onFocus={() => {
+                        setOpen(true)
+                        dispatch({ type: createNotesReducerKeys.ADD_ID, value: formatNoteId(Date.now()) });
+                    }}
+                    value={state.description}
+                    ref={inputDescriptionRef}
+                    onChange={handleChangeDescription}
+                    onInput={handleInputTextarea}
+                />
+            )
 
-            <div className={`createNotesItem ${isOpen ? "flex w-full justify-between" : "hidden"}`}>
-                <aside className="flex items-center justify-between w-2/3 createNotesItem">
+            }
+
+
+            <div className={` ${isOpen ? "flex w-full justify-between" : "hidden"}`}>
+                <aside className="flex items-center justify-between w-2/3">
                     {iconList.map((Icon, index) => (
-                        <IconHover key={index} className="createNotesItem">
-                            <Icon size={iconSize} color={iconColor} strokeWidth={iconStrokeWidth} className="createNotesItem" />
+                        <IconHover key={index}>
+                            <Icon size={iconSize} color={iconColor} strokeWidth={iconStrokeWidth} />
                         </IconHover>
                     ))}
                 </aside>
-                <div className={`createNotesItem ${isOpen ? "w-1/3 flex justify-end items-center" : "hidden"}`}>
+                <div className={` ${isOpen ? "w-1/3 flex justify-end items-center" : "hidden"}`}>
                     <button
                         onClick={(e) => {
                             handleSubmit(e)
                             setOpen(false);
                             inputDescriptionRef.current.blur()
                         }}
-                        className="hover:bg-zinc-200 hover:cursor-pointer hover:outline-4 outline-zinc-200 rounded-sm w-1/2 flex justify-center createNotesItem">
+                        className="hover:bg-zinc-200 hover:cursor-pointer hover:outline-4 outline-zinc-200 rounded-sm w-1/2 flex justify-center">
                         <p className="text-zinc-600">Cerrar</p>
                     </button>
                 </div>
             </div>
         </form>
-
     )
 }
